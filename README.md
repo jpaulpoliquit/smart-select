@@ -2,7 +2,6 @@
 
 **Smart Select makes `Ctrl+A` progressive and context-aware in Obsidian.** Instead of selecting everything at once, it expands selection logically through document structures: Paragraph → Section → Document.
 
-## Why Smart Select?
 
 Traditional `Ctrl+A` was designed for flat text files, but modern documents are structured. Markdown, HTML, and block-based editors introduced hierarchy—paragraphs, lists, tables, code blocks—yet shortcuts haven't evolved. Users think in structures, but selection remains primitive.
 
@@ -62,39 +61,40 @@ It spans multiple lines and contains important information. // cursor here
 
 Smart Select follows three core principles:
 
-1. **Context Sensitivity** – Selection starts with the smallest logical unit at cursor position
-2. **Progressive Expansion** – Each press climbs the document hierarchy naturally  
-3. **Muscle Memory Safe** – Traditional behavior remains accessible via `Ctrl+Shift+A`
+1. **Context Sensitivity**. Selection starts with the smallest logical unit at cursor position
+2. **Progressive Expansion**. Each press climbs the document hierarchy naturally  
+3. **Muscle Memory Safe**. Traditional behavior remains accessible via `Ctrl+Shift+A`
 
 This approach respects established interface conventions while adding structural intelligence. Rather than replacing universality, it extends it.
 
 ## The Challenge of Universal Commands
 
-`Ctrl+A` represents one of computing's most successful interface standards, originating from ASCII control character 1 and becoming universal through Apple's 1984 Human Interface Guidelines. Its power lies in cross-application consistency:
+`Ctrl+A` represents one of computing's most successful interface standards, originating from ASCII control character 1 and becoming universal through Apple's 1984 Human Interface Guidelines. Across platforms and applications, `Ctrl+A` exhibits remarkably consistent behavior::
 
 - Text editors → entire document
 - Spreadsheets → entire sheet  
 - File managers → all files
 - Browsers → full page
+- Design tools → all objects on canvas
 
 But this universality has a blind spot: it ignores how documents themselves have evolved from flat text to rich, structured content.
 
 Smart Select reveals fundamental tensions in interface design:
 
-**Convention vs. Intelligence** – Universal commands provide consistency, but context-aware behavior provides relevance.
+**Convention vs. Intelligence**. Universal commands provide consistency, but context-aware behavior provides relevance.
 
-**Simplicity vs. Capability** – Traditional select-all is cognitively simple; progressive selection adds power but requires understanding hierarchical state.
+**Simplicity vs. Capability**. Traditional select-all is cognitively simple; progressive selection adds power but requires understanding hierarchical state.
 
-**Predictability vs. Optimization** – Users expect consistent behavior across applications, yet document structure offers opportunities for smarter interaction.
+**Predictability vs. Optimization**. Users expect consistent behavior across applications, yet document structure offers opportunities for smarter interaction.
 
 ## Technical Implementation
 
 Smart Select works through four key mechanisms:
 
-1. **Context Detection** – Analyzes cursor position to identify structural context (paragraph, list item, table cell, etc.)
-2. **Boundary Recognition** – Uses Markdown syntax to identify natural content boundaries
-3. **Progressive Mapping** – Maps each `Ctrl+A` press to the next logical container in the hierarchy
-4. **State Management** – Resets progression when cursor moves or content changes
+1. **Context Detection**. Analyzes cursor position to identify structural context (paragraph, list item, table cell, etc.)
+2. **Boundary Recognition**. Uses Markdown syntax to identify natural content boundaries
+3. **Progressive Mapping**. Maps each `Ctrl+A` press to the next logical container in the hierarchy
+4. **State Management**. Resets progression when cursor moves or content changes
 
 ## Configuration
 
@@ -122,7 +122,7 @@ Research indicates structural awareness might better supplement rather than repl
 
 Smart Select serves as a **proof of concept**: Can structural awareness coexist with universal muscle memory?
 
-Text has evolved from flat files to structured documents, but shortcuts remain unchanged. The future lies not in replacing universality, but extending it. This should become a standard across modern editors—not just Obsidian or Notion, but everywhere users work with structured content.
+Text has evolved from flat files to structured documents, but shortcuts remain unchanged.
 
 This plugin explores whether progressive text selection can enhance productivity while respecting established interface conventions, pointing toward a future where commands evolve alongside the documents they operate on.
 
