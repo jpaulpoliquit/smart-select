@@ -12,11 +12,61 @@ module.exports = class SmartSelectPlugin extends Plugin {
       editorCallback: (editor) => this.smartSelect(editor)
     });
     
+    // Add escape hatch command
+    this.addCommand({
+      id: 'smart-select-classic-all',
+      name: 'Smart Select: Classic Select All',
+      editorCallback: (editor) => {
+        console.log('Classic select all triggered via command');
+        const lastLine = editor.lastLine();
+        editor.setSelection({ line: 0, ch: 0 }, { line: lastLine, ch: (editor.getLine(lastLine) || '').length });
+      }
+    });
+    
     // Register keymap for Ctrl/Cmd+A
     this.registerDomEvent(document, 'keydown', (evt) => {
+      // Debug logging for all Ctrl+A combinations
+      if ((evt.ctrlKey || evt.metaKey) && evt.key === 'a') {
+        console.log('Ctrl+A detected:', {
+          ctrlKey: evt.ctrlKey,
+          metaKey: evt.metaKey,
+          shiftKey: evt.shiftKey,
+          altKey: evt.altKey,
+          key: evt.key,
+          target: evt.target.tagName
+        });
+      }
+      
+      // Escape hatch: Ctrl+Shift+A for classic "Select All" (check this FIRST)
+      if ((evt.ctrlKey || evt.metaKey) && evt.key === 'a' && evt.shiftKey && !evt.altKey) {
+        const activeLeaf = this.app.workspace.activeLeaf;
+        if (activeLeaf && activeLeaf.view.getViewType() === 'markdown') {
+          console.log('Escape hatch triggered - classic select all');
+          evt.preventDefault();
+          evt.stopPropagation();
+          // Perform classic select all directly
+          const editor = activeLeaf.view.editor;
+          const lastLine = editor.lastLine();
+          const lastLineLength = (editor.getLine(lastLine) || '').length;
+          
+          // Get current cursor position before selection
+          const currentCursor = editor.getCursor();
+          
+          // Set selection from start to end
+          editor.setSelection({ line: 0, ch: 0 }, { line: lastLine, ch: lastLineLength });
+          
+          // Keep cursor at its original position for better UX
+          editor.setCursor(currentCursor);
+          
+          return false;
+        }
+      }
+      
+      // Smart select: Ctrl+A (no shift) - check this SECOND
       if ((evt.ctrlKey || evt.metaKey) && evt.key === 'a' && !evt.shiftKey && !evt.altKey) {
         const activeLeaf = this.app.workspace.activeLeaf;
         if (activeLeaf && activeLeaf.view.getViewType() === 'markdown') {
+          console.log('Smart select triggered');
           evt.preventDefault();
           evt.stopPropagation();
           this.smartSelect(activeLeaf.view.editor);
@@ -94,7 +144,11 @@ module.exports = class SmartSelectPlugin extends Plugin {
            editor.setSelection(heading.from, heading.to);
          } else {
            console.log('No larger parent anywhere; expanding to entire document');
+           // Get current cursor position before selection
+           const currentCursor = editor.getCursor();
            editor.setSelection({ line: 0, ch: 0 }, { line: lastLine, ch: (editor.getLine(lastLine) || '').length });
+           // Keep cursor at its original position for better UX
+           editor.setCursor(currentCursor);
          }
        }
      } else {
@@ -105,7 +159,11 @@ module.exports = class SmartSelectPlugin extends Plugin {
         editor.setSelection(heading.from, heading.to);
       } else {
         console.log('No parent expansion available; expanding to entire document');
+        // Get current cursor position before selection
+        const currentCursor = editor.getCursor();
         editor.setSelection({ line: 0, ch: 0 }, { line: lastLine, ch: (editor.getLine(lastLine) || '').length });
+        // Keep cursor at its original position for better UX
+        editor.setCursor(currentCursor);
       }
     }
   }

@@ -23,10 +23,12 @@ Smart Select bridges this gap by making selection **follow meaning, not just pos
 
 Press **`Ctrl/CMD + A`** repeatedly to expand selection progressively:
 
-**In paragraphs:** Text block → Section → Document  
-**In lists:** Current item → Item with children → Full list → Section → Document  
-**In tables:** Cell → Row → Table → Section → Document  
-**In code blocks:** Code block → Section → Document
+**In paragraphs:** Current line → Paragraph → Section → Document  
+**In lists:** Current line → Bullet item → Bullet list → Section → Document  
+**In code blocks:** Code content → Full code block → Section → Document  
+**In quotes:** Quote block → Section → Document
+
+*Note: Table support is planned for future versions.*
 
 **Escape hatch:** `Ctrl/CMD + Shift + A` always performs classic "Select All"
 
@@ -40,9 +42,10 @@ It spans multiple lines and contains important information. // cursor here
 
 ## Next Section
 ```
-- Press 1: Select the paragraph
-- Press 2: Select "Project Notes" section  
-- Press 3: Select entire document
+- Press 1: Select the current line
+- Press 2: Select the entire paragraph
+- Press 3: Select "Project Notes" section  
+- Press 4: Select entire document
 
 **List Selection**
 ```markdown
@@ -52,8 +55,8 @@ It spans multiple lines and contains important information. // cursor here
     - User interviews
   - Design phase
 ```
-- Press 1: Select "Research phase"
-- Press 2: Select research phase + children
+- Press 1: Select the current line
+- Press 2: Select "Research phase" item with children
 - Press 3: Select entire "Project Tasks" list
 - Press 4: Select containing section
 
