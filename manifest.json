@@ -1,0 +1,10 @@
+{
+  "id": "smart-select",
+  "name": "Smart Select",
+  "version": "1.0.0",
+  "minAppVersion": "0.12.0",
+  "description": "Intelligently expand text selection to logical boundaries with progressive selection",
+  "author": "jpaulpoliquit",
+  "authorUrl": "https://github.com/jpaulpoliquit",
+  "isDesktopOnly": false
+}
